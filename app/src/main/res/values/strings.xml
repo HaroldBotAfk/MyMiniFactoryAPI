@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">MIRHRIM</string>
+    <string name="auth_canceled">Error</string>
+    <string name="username_error">Пользователя с таким именем не существует</string>
+    <string name="unknow_error">Неизвестная ошибка</string>
+    <string name="name">Имя:</string>
+    <string name="followers">Отслеживают:</string>
+    <string name="collections">Коллекции:</string>
+    <string name="objects">Моделей: </string>
+    <string name="description">Описание: </string>
+    <string name="title">Название: </string>
+    <string name="image">Изображений: </string>
+    <string name="article">Артикул</string>
+</resources>
