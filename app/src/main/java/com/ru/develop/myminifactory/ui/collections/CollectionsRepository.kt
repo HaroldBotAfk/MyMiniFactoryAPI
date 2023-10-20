@@ -1,10 +1,7 @@
 package com.ru.develop.myminifactory.ui.collections
 
-import android.util.Log
-import com.ru.develop.myminifactory.R
 import com.ru.develop.myminifactory.data.models.CollectionWithAvatar
 import com.ru.develop.myminifactory.data.myminifactory.models.collections.RemoteCollections
-import com.ru.develop.myminifactory.data.myminifactory.models.objects.RemoteObjects
 import com.ru.develop.myminifactory.data.network.Networking
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -29,7 +26,6 @@ class CollectionsRepository {
                     ) {
                         if (response.isSuccessful) {
                             continuation.resume(response.body()!!)
-                            Log.d("JSON COLLECTIONS", "${response.body()!!}")
                         } else {
                             continuation.resumeWithException(Throwable("Status code error"))
                         }
@@ -37,7 +33,6 @@ class CollectionsRepository {
 
                     override fun onFailure(call: Call<RemoteCollections>, t: Throwable) {
                         continuation.resumeWithException(t)
-                        Log.d("JSON COLLECTIONS", "ОШИБКА")
                     }
                 }
             )

@@ -7,7 +7,7 @@
     android:paddingStart="8dp"
     android:paddingTop="8dp"
     android:paddingEnd="8dp"
-    android:paddingBottom="12dp">
+    android:paddingBottom="14dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/userItemCard"

@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.ru.develop.myminifactory.R
@@ -42,20 +41,27 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
             setHasFixedSize(true)
             addItemDecoration(
                 DividerItemDecoration(
-                    requireContext(),
-                    DividerItemDecoration.VERTICAL
+                    requireContext(), DividerItemDecoration.VERTICAL
                 )
             )
         }
     }
 
     private fun bindViewModel() {
+        binding.collectionFragmentToolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+
+
         viewModel.followCollection.observe(viewLifecycleOwner) { collectionList ->
             collectionAdapter.items = collectionList
         }
         viewModel.toastException.observe(viewLifecycleOwner) { stringID ->
             collectionAdapter.items = emptyList()
             toast(stringID)
+        }
+        viewModel.progressView.observe(viewLifecycleOwner) { string ->
+            binding.collectionProgressTextView.text = string
         }
         viewModel.isLoading.observe(viewLifecycleOwner, ::isLoading)
     }
@@ -67,5 +73,6 @@ class CollectionsFragment : Fragment(R.layout.fragment_collections) {
     private fun isLoading(isLoading: Boolean) {
         binding.collectionList.isVisible = isLoading.not()
         binding.collectionsProgressBar.isVisible = isLoading
+        binding.collectionProgressTextView.isVisible = isLoading
     }
 }

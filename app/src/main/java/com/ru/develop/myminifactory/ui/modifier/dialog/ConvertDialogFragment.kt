@@ -3,7 +3,6 @@ package com.ru.develop.myminifactory.ui.modifier.dialog
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.ru.develop.myminifactory.R
@@ -19,13 +18,12 @@ class ConvertDialogFragment : DialogFragment() {
 
         return AlertDialog.Builder(requireContext())
             .setView(view)
-            .setTitle("Артикул")
-            .setMessage("Начальный артикул для первого товара")
-            .setNeutralButton("Отмена") { _, _ ->
+            .setTitle(getString(R.string.article))
+            .setMessage(getString(R.string.first_article_for_offer))
+            .setNeutralButton(getString(R.string.cancel)) { _, _ ->
                 dialogListener?.onDialogNeutralClick()
             }
-            .setPositiveButton("Ок") { _, _ ->
-                Log.d("CheckFinallyStep", "нажал на кнопку")
+            .setPositiveButton(getString(R.string.ok)) { _, _ ->
                 val article = view.findViewById<EditText>(R.id.articleEditText).text.toString()
                 dialogListener?.onDialogPositiveClick(
                     article

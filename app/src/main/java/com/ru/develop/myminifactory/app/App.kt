@@ -1,7 +1,6 @@
 package com.ru.develop.myminifactory.app
 
 import android.app.Application
-import com.ru.develop.myminifactory.data.db.Database
 import com.ru.develop.myminifactory.data.network.Networking
 
 class App : Application() {
@@ -9,6 +8,5 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         Networking.init(this)
-        Database.init(this)
     }
 }

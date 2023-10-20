@@ -3,19 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/whiteGray">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/modifierObjectToolbar"
+        style="@style/CustomToolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/browser_actions_title_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/toolbar_objects"
-        app:title="ModifierObjects"
-        app:titleTextColor="@color/white" />
+        app:menu="@menu/toolbar_menu_modifier_objects"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:title="@string/choice_models" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:alpha="0.15"
+        android:src="@drawable/ic_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/modifierObjectToolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/modifierObjectList"

@@ -2,7 +2,6 @@ package com.ru.develop.myminifactory.ui.auth
 
 import android.app.Application
 import android.content.Intent
-import android.util.Log
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -47,12 +46,10 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun onAuthCodeReceived(tokenRequest: TokenRequest) {
-        Log.d("Oauth", "3. Received code = ${tokenRequest.authorizationCode}")
 
         viewModelScope.launch {
             loadingMutableStateFlow.value = true
             runCatching {
-                Log.d("Oauth","4. Change code to token. Url = ${tokenRequest.configuration.tokenEndpoint}, verifier = ${tokenRequest.codeVerifier}")
                 authRepository.performTokenRequest(
                     authService = authService,
                     tokenRequest = tokenRequest
@@ -71,15 +68,12 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         val customTabsIntent = CustomTabsIntent.Builder().build()
         val authRequest = authRepository.getAuthRequest()
 
-        Log.d("Oauth", "1. Generated verifier=${authRequest.codeVerifier}, challenge=${authRequest.codeVerifierChallenge}")
-
         val openAuthPageIntent = authService.getAuthorizationRequestIntent(
             authRequest,
             customTabsIntent
         )
 
         openAuthPageEventChannel.trySendBlocking(openAuthPageIntent)
-        Log.d("Oauth", "2. Open auth page: ${authRequest.toUri()}")
     }
 
     override fun onCleared() {

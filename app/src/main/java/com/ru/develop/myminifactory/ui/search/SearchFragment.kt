@@ -2,6 +2,7 @@ package com.ru.develop.myminifactory.ui.search
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -68,7 +69,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun createFlow() {
-        val userFlow = binding.searchUserEditText.textChangedFlow()
-        viewModel.bindFlow(userFlow)
+        val searchItem = binding.searchFragmentToolbar.menu.findItem(R.id.action_search).actionView as SearchView
+        val searchFlow = searchItem.textChangedFlow()
+
+
+        viewModel.bindFlow(searchFlow)
     }
 }

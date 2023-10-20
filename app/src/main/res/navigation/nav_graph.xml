@@ -13,7 +13,7 @@
         <action
             android:id="@+id/action_authFragment_to_menuFragment"
             app:destination="@id/searchFragment"
-            app:popUpTo="@id/authFragment"
+            app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment

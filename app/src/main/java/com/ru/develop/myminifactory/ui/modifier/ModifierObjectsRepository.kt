@@ -1,7 +1,5 @@
 package com.ru.develop.myminifactory.ui.modifier
 
-import android.util.Log
-import com.ru.develop.myminifactory.data.db.Database
 import com.ru.develop.myminifactory.data.models.ModifierObject
 import com.ru.develop.myminifactory.data.myminifactory.models.objects.Object
 import com.ru.develop.myminifactory.data.myminifactory.models.objects.RemoteObjects
@@ -17,8 +15,6 @@ import kotlin.coroutines.suspendCoroutine
 
 class ModifierObjectsRepository {
 
-    private val modifierObjectDao = Database.instance.modifierObjectDao()
-
     suspend fun getObjects(collectionID: Int): List<Object> {
         return suspendCoroutine { continuation ->
             Networking.myMiniFactoryAPI.getCollectionObjects(collectionID.toString()).enqueue(
@@ -29,7 +25,6 @@ class ModifierObjectsRepository {
                     ) {
                         if (response.isSuccessful) {
                             continuation.resume(response.body()!!.objectsList)
-                            Log.d("JSON OBJECTS", "${response.body()!!}")
                         } else {
                             continuation.resumeWithException(Throwable("Status code error"))
                         }
@@ -37,7 +32,6 @@ class ModifierObjectsRepository {
 
                     override fun onFailure(call: Call<RemoteObjects>, t: Throwable) {
                         continuation.resumeWithException(t)
-                        Log.d("JSON OBJECTS", "ОШИБКА")
                     }
                 }
             )
@@ -81,10 +75,6 @@ class ModifierObjectsRepository {
         }
 
         return returnedList
-    }
-
-    suspend fun insertItemsInDB(items: List<ModifierObject>) {
-        modifierObjectDao.insertModifierObject(items)
     }
 
     fun convertObjectsInText(

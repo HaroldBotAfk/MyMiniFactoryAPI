@@ -1,11 +1,9 @@
 package com.ru.develop.myminifactory.ui.collections
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ru.develop.myminifactory.R
 import com.ru.develop.myminifactory.data.models.CollectionWithAvatar
@@ -18,6 +16,7 @@ class CollectionsViewModel(application: Application) : AndroidViewModel(applicat
     private val followCollectionLiveData = MutableLiveData<List<CollectionWithAvatar>>()
     private val toastExceptionLiveData = MutableLiveData<Int>()
     private val isLoadingLiveData = MutableLiveData<Boolean>()
+    private val progressViewLiveData = MutableLiveData<String>()
 
     val followCollection: LiveData<List<CollectionWithAvatar>>
         get() = followCollectionLiveData
@@ -28,6 +27,9 @@ class CollectionsViewModel(application: Application) : AndroidViewModel(applicat
     val isLoading: LiveData<Boolean>
         get() = isLoadingLiveData
 
+    val progressView: LiveData<String>
+        get() = progressViewLiveData
+
     fun getUserCollections(username: String) {
         try {
             viewModelScope.launch {
@@ -35,8 +37,9 @@ class CollectionsViewModel(application: Application) : AndroidViewModel(applicat
 
                 val collections = repository.getInfoAboutUserCollections(username = username)
                 val collectionWithAvatar = repository.createNewListWithPhoto(
-                    list = collections, onItemLoaded = {
-                        Log.d("onItemLoadedddd", "$it/${collections.count}")
+                    list = collections,
+                    onItemLoaded = {
+                        progressViewLiveData.postValue("$it/${collections.count}")
                     }
                 )
 

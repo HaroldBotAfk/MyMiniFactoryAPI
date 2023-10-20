@@ -2,9 +2,6 @@ package com.ru.develop.myminifactory.ui.modifier
 
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -60,12 +57,12 @@ class ModifierObjectsFragment : Fragment(R.layout.fragment_modifier_objects), Di
         if (article.isNotBlank()) {
             convertObjectsInYMLFile(article)
         } else {
-            toast("Необходимо заполнить поле")
+            toast(getString(R.string.need_fill_field))
         }
     }
 
     override fun onDialogNeutralClick() {
-        toast("Отменено")
+        toast(getString(R.string.canceled))
     }
 
     private fun initList() {
@@ -91,15 +88,22 @@ class ModifierObjectsFragment : Fragment(R.layout.fragment_modifier_objects), Di
     }
 
     private fun bindViewModel() {
+        binding.modifierObjectToolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+
+
         viewModel.followModifierObject.observe(viewLifecycleOwner) { objectList ->
             objectsAdapter.items = objectList
         }
         viewModel.objectText.observe(viewLifecycleOwner) { objectText ->
             this.objectText = objectText
-            createDocumentLauncher.launch("New file mirhrim.xml")
+            createDocumentLauncher.launch("New mirhrim file ${navArgs.collectionID}.xml")
+        }
+        viewModel.toastException.observe(viewLifecycleOwner) { stringID ->
+            toast(stringID)
         }
         viewModel.isLoading.observe(viewLifecycleOwner, ::isLoading)
-
     }
 
     private fun initToolbar() {
@@ -120,14 +124,14 @@ class ModifierObjectsFragment : Fragment(R.layout.fragment_modifier_objects), Di
             ActivityResultContracts.CreateDocument("text/*")
         ) { uri ->
             handleCreateFile(uri)
-            toast("Файл был создан")
+            toast(getString(R.string.file_created))
         }
     }
 
     private fun handleCreateFile(uri: Uri?) {
 
         if (uri == null) {
-            toast("Файл не был создан")
+            toast(getString(R.string.file_doesnt_created))
             return
         }
 
@@ -166,7 +170,7 @@ class ModifierObjectsFragment : Fragment(R.layout.fragment_modifier_objects), Di
             item.isSeparate = true
             bind.root.setBackgroundColor(requireContext().getColor(R.color.gray))
         } else {
-            bind.root.setBackgroundColor(requireContext().getColor(R.color.white))
+            bind.root.setBackgroundColor(requireContext().getColor(R.color.whiteGray))
             item.isSeparate = false
         }
     }

@@ -13,7 +13,7 @@ import kotlin.coroutines.suspendCoroutine
 class ImagesRepository {
 
     //Т.к. с MyMiniFactory выдает null при поиске объекта по ID, мы будем запрашивать всю ту же коллекцию, но уже с доп действием:
-    //после ответа с сервера мы будем с помощью функции filter искать с нужным нам ID объектом.
+    //после ответа с сервера мы будем с помощью функции filter искать объект с нужным нам ID.
     suspend fun getObjectImages(objectID: Int, collectionID: Int): List<ObjectImages> {
         return suspendCoroutine { continuation ->
             Networking.myMiniFactoryAPI.getCollectionObjects(collectionID.toString()).enqueue(

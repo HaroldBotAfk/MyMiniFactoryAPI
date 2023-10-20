@@ -4,16 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp">
+    android:background="@color/whiteGray">
 
-    <EditText
-        android:id="@+id/searchUserEditText"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/searchFragmentToolbar"
+        style="@style/CustomToolbar"
         android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:hint="Username"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/toolbar_menu_search"
+        app:title="@string/find_user" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:alpha="0.15"
+        android:src="@drawable/ic_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchFragmentToolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/userList"
@@ -23,7 +36,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchUserEditText"
+        app:layout_constraintTop_toBottomOf="@id/searchFragmentToolbar"
         tools:itemCount="1"
         tools:listitem="@layout/item_user" />
 
