@@ -44,21 +44,23 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
         flowJob = textFlow
             .debounce(2000)  //Выполнение Flow после 2х секунд
             .distinctUntilChanged()  //Flow не выполняется если друг за другом идут одинаковы значения
-            .onEach {
-                isLoadingLiveData.postValue(true)
-            }
             .onEach { username ->
-                repository.getInfoAboutUser(
-                    username,
-                    successfulCallback = { remoteUser ->
-                        isLoadingLiveData.postValue(false)
-                        followUserLiveData.postValue(remoteUser)
-                    },
-                    errorCallback = { stringId ->
-                        isLoadingLiveData.postValue(false)
-                        toastExceptionLivaData.postValue(stringId)
-                    }
-                )
+                if (username.isNotBlank()) {
+
+                    isLoadingLiveData.postValue(true)
+                    repository.getInfoAboutUser(
+                        username,
+                        successfulCallback = { remoteUser ->
+                            isLoadingLiveData.postValue(false)
+                            followUserLiveData.postValue(remoteUser)
+                        },
+                        errorCallback = { stringId ->
+                            isLoadingLiveData.postValue(false)
+                            toastExceptionLivaData.postValue(stringId)
+                        }
+                    )
+
+                }
             }
             .catch {
                 isLoadingLiveData.postValue(false)
