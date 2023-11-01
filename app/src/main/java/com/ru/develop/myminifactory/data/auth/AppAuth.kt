@@ -77,8 +77,8 @@ object AppAuth {
         const val TOKEN_URI = "https://auth.myminifactory.com/v1/oauth/tokens"
         const val RESPONSE_TYPE = ResponseTypeValues.CODE
         const val SCOPE = "user,collection,object,objects"
-        const val CLIENT_ID = ""
-        const val CLIENT_SECRET = ""
+        const val CLIENT_ID = "application_name"
+        const val CLIENT_SECRET = "ImoNElTU4zo1bjaqgrWLMucGhqBZP9"
         const val CALLBACK_URL = "ru.mirhrim.oauth://myminifactory.ru/callback"
     }
 }
