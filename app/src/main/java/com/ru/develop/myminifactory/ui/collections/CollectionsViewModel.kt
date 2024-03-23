@@ -1,17 +1,20 @@
 package com.ru.develop.myminifactory.ui.collections
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ru.develop.myminifactory.R
 import com.ru.develop.myminifactory.data.models.CollectionWithAvatar
+import com.ru.develop.myminifactory.data.network.CollectionsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CollectionsViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository = CollectionsRepository()
+@HiltViewModel
+class CollectionsViewModel @Inject constructor(
+    private val repository: CollectionsRepository
+) : ViewModel() {
 
     private val followCollectionLiveData = MutableLiveData<List<CollectionWithAvatar>>()
     private val toastExceptionLiveData = MutableLiveData<Int>()

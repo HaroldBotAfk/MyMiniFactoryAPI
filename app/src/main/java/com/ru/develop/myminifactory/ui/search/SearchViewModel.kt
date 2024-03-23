@@ -1,13 +1,14 @@
 package com.ru.develop.myminifactory.ui.search
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ru.develop.myminifactory.R
 import com.ru.develop.myminifactory.data.myminifactory.models.RemoteUser
+import com.ru.develop.myminifactory.data.network.SearchRepository
 import com.ru.develop.myminifactory.utils.SingleLiveEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -18,10 +19,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.job
 import kotlinx.coroutines.plus
+import javax.inject.Inject
 
-class SearchViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository = SearchRepository(application)
+@HiltViewModel
+class SearchViewModel @Inject constructor(
+    private val repository: SearchRepository
+) : ViewModel() {
 
     private var flowJob: Job? = null
 

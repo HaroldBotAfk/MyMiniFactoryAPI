@@ -13,9 +13,11 @@ import com.ru.develop.myminifactory.R
 import com.ru.develop.myminifactory.databinding.FragmentAuthBinding
 import com.ru.develop.myminifactory.utils.launchAndCollectIn
 import com.ru.develop.myminifactory.utils.toast
+import dagger.hilt.android.AndroidEntryPoint
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationResponse
 
+@AndroidEntryPoint
 class AuthFragment : Fragment(R.layout.fragment_auth) {
 
     private val getAuthResponse =
@@ -47,7 +49,7 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
             toast(string)
         }
         viewModel.authSuccessFlow.launchAndCollectIn(viewLifecycleOwner) {
-            findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToMenuFragment())
+            findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToSearchFragment())
         }
     }
 

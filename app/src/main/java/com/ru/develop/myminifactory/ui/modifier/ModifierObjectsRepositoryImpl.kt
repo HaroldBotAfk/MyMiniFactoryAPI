@@ -1,23 +1,27 @@
 package com.ru.develop.myminifactory.ui.modifier
 
 import com.ru.develop.myminifactory.data.models.ModifierObject
+import com.ru.develop.myminifactory.data.myminifactory.MyMiniFactoryAPI
 import com.ru.develop.myminifactory.data.myminifactory.models.objects.Object
 import com.ru.develop.myminifactory.data.myminifactory.models.objects.RemoteObjects
-import com.ru.develop.myminifactory.data.network.Networking
+import com.ru.develop.myminifactory.data.network.ModifierObjectsRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Date
+import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class ModifierObjectsRepository {
+class ModifierObjectsRepositoryImpl @Inject constructor(
+    private val myMiniFactoryAPI: MyMiniFactoryAPI
+): ModifierObjectsRepository {
 
-    suspend fun getObjects(collectionID: Int): List<Object> {
+    override suspend fun getObjects(collectionID: Int): List<Object> {
         return suspendCoroutine { continuation ->
-            Networking.myMiniFactoryAPI.getCollectionObjects(collectionID.toString()).enqueue(
+            myMiniFactoryAPI.getCollectionObjects(collectionID.toString()).enqueue(
                 object : Callback<RemoteObjects> {
                     override fun onResponse(
                         call: Call<RemoteObjects>,
@@ -38,9 +42,9 @@ class ModifierObjectsRepository {
         }
     }
 
-    suspend fun getModifierObject(collectionID: Int): List<ModifierObject> {
+    override suspend fun getModifierObject(collectionID: Int): List<ModifierObject> {
         return suspendCoroutine { continuation ->
-            Networking.myMiniFactoryAPI.getCollectionObjects(collectionID.toString()).enqueue(
+            myMiniFactoryAPI.getCollectionObjects(collectionID.toString()).enqueue(
                 object : Callback<RemoteObjects> {
                     override fun onResponse(
                         call: Call<RemoteObjects>,
@@ -61,23 +65,7 @@ class ModifierObjectsRepository {
         }
     }
 
-    private fun convertObjects(objectList: List<Object>): List<ModifierObject> {
-        val returnedList: MutableList<ModifierObject> = mutableListOf()
-        for (item in objectList) {
-            returnedList.add(
-                ModifierObject(
-                    item.id,
-                    item.name,
-                    item.imageList[0].original!!.url,
-                    item.imageList.size
-                )
-            )
-        }
-
-        return returnedList
-    }
-
-    fun convertObjectsInText(
+    override fun convertObjectsInText(
         modifierList: List<ModifierObject>,
         objectList: List<Object>,
         startArticle: String
@@ -120,6 +108,22 @@ class ModifierObjectsRepository {
                 "\n</yml_catalog>"
 
         return txt
+    }
+
+    private fun convertObjects(objectList: List<Object>): List<ModifierObject> {
+        val returnedList: MutableList<ModifierObject> = mutableListOf()
+        for (item in objectList) {
+            returnedList.add(
+                ModifierObject(
+                    item.id,
+                    item.name,
+                    item.imageList[0].original!!.url,
+                    item.imageList.size
+                )
+            )
+        }
+
+        return returnedList
     }
 
     private fun createOffer(

@@ -11,7 +11,7 @@
         android:label="AuthFragment"
         tools:layout="@layout/fragment_auth">
         <action
-            android:id="@+id/action_authFragment_to_menuFragment"
+            android:id="@+id/action_authFragment_to_searchFragment"
             app:destination="@id/searchFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />

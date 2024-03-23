@@ -14,7 +14,9 @@ import com.ru.develop.myminifactory.databinding.FragmentImagesBinding
 import com.ru.develop.myminifactory.ui.images.adapter.ImageAdapter
 import com.ru.develop.myminifactory.utils.AutoClearedValue
 import com.ru.develop.myminifactory.utils.toast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ImagesFragment : Fragment(R.layout.fragment_images) {
 
     private val binding: FragmentImagesBinding by viewBinding()

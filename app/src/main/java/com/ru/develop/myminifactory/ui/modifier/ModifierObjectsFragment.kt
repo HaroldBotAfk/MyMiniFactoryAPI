@@ -22,10 +22,12 @@ import com.ru.develop.myminifactory.ui.modifier.dialog.ConvertDialogFragment
 import com.ru.develop.myminifactory.ui.modifier.dialog.DialogListener
 import com.ru.develop.myminifactory.utils.AutoClearedValue
 import com.ru.develop.myminifactory.utils.toast
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+@AndroidEntryPoint
 class ModifierObjectsFragment : Fragment(R.layout.fragment_modifier_objects), DialogListener {
 
     private lateinit var createDocumentLauncher: ActivityResultLauncher<String>

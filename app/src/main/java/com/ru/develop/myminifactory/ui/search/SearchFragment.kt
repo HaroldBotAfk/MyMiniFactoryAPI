@@ -16,7 +16,9 @@ import com.ru.develop.myminifactory.ui.search.adapter.UserAdapter
 import com.ru.develop.myminifactory.utils.AutoClearedValue
 import com.ru.develop.myminifactory.utils.textChangedFlow
 import com.ru.develop.myminifactory.utils.toast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private val binding: FragmentSearchBinding by viewBinding(FragmentSearchBinding::bind)
@@ -28,7 +30,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         bindViewModel()
         initList()
         createFlow()
-
     }
 
     private fun initList() {
@@ -71,7 +72,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private fun createFlow() {
         val searchItem = binding.searchFragmentToolbar.menu.findItem(R.id.action_search).actionView as SearchView
         val searchFlow = searchItem.textChangedFlow()
-
 
         viewModel.bindFlow(searchFlow)
     }

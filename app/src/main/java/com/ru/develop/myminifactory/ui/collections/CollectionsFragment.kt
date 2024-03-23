@@ -15,7 +15,9 @@ import com.ru.develop.myminifactory.databinding.FragmentCollectionsBinding
 import com.ru.develop.myminifactory.ui.collections.adapter.CollectionAdapter
 import com.ru.develop.myminifactory.utils.AutoClearedValue
 import com.ru.develop.myminifactory.utils.toast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CollectionsFragment : Fragment(R.layout.fragment_collections) {
 
     private val args: CollectionsFragmentArgs by navArgs()

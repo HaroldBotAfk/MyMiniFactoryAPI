@@ -4,9 +4,11 @@ import android.app.Application
 import android.content.Intent
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ru.develop.myminifactory.R
 import com.ru.develop.myminifactory.data.auth.AuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
@@ -17,11 +19,14 @@ import kotlinx.coroutines.launch
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.TokenRequest
+import javax.inject.Inject
 
-class AuthViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val authRepository = AuthRepository()
-    private val authService: AuthorizationService = AuthorizationService(application)
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val authRepository: AuthRepository,  //инъекция в конструктор
+    private val authService: AuthorizationService,  //инъекция в конструктор
+) : ViewModel() {
 
     private val openAuthPageEventChannel = Channel<Intent>(Channel.BUFFERED)
     private val toastEventChannel = Channel<Int>(Channel.BUFFERED)
@@ -35,18 +40,17 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     val toastFlow: Flow<Int>
         get() = toastEventChannel.receiveAsFlow()
 
-    val loadingFlow: Flow<Boolean>
-        get() = loadingMutableStateFlow.asStateFlow()
-
     val authSuccessFlow: Flow<Unit>
         get() = authSuccessEventChannel.receiveAsFlow()
+
+    val loadingFlow: Flow<Boolean>
+        get() = loadingMutableStateFlow.asStateFlow()
 
     fun onAuthCodeFailed(exception: AuthorizationException) {
         toastEventChannel.trySendBlocking(R.string.auth_canceled)
     }
 
     fun onAuthCodeReceived(tokenRequest: TokenRequest) {
-
         viewModelScope.launch {
             loadingMutableStateFlow.value = true
             runCatching {

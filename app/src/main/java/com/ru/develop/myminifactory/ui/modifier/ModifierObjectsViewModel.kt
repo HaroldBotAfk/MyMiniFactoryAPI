@@ -1,17 +1,20 @@
 package com.ru.develop.myminifactory.ui.modifier
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ru.develop.myminifactory.R
 import com.ru.develop.myminifactory.data.models.ModifierObject
+import com.ru.develop.myminifactory.data.network.ModifierObjectsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ModifierObjectsViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository = ModifierObjectsRepository()
+@HiltViewModel
+class ModifierObjectsViewModel @Inject constructor(
+    private val repository: ModifierObjectsRepository
+) : ViewModel() {
 
     private val followModifierObjectLiveData = MutableLiveData<List<ModifierObject>>()
     private val isLoadingLiveData = MutableLiveData<Boolean>()

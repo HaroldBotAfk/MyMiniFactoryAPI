@@ -1,17 +1,20 @@
 package com.ru.develop.myminifactory.ui.images
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ru.develop.myminifactory.R
 import com.ru.develop.myminifactory.data.myminifactory.models.objects.ObjectImages
+import com.ru.develop.myminifactory.data.network.ImagesRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ImagesViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository = ImagesRepository()
+@HiltViewModel
+class ImagesViewModel @Inject constructor(
+    private val repository: ImagesRepository
+) : ViewModel() {
 
     private val followImageLiveData = MutableLiveData<List<ObjectImages>>()
     private val isLoadingLiveData = MutableLiveData<Boolean>()
